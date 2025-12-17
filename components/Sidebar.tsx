@@ -53,9 +53,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeId, onSelect }) => {
                       onSelect(sub.id);
                     }
                   }}
-                  className={`relative w-full flex items-center justify-between ${paddingLeft} pr-4 py-2 text-sm transition-all duration-200 group rounded-r-lg mr-2 font-medium
+                  className={`relative w-full flex items-center justify-between ${paddingLeft} pr-4 py-2 text-base transition-all duration-200 group rounded-r-lg mr-2 font-medium
                     ${(isActive || (isChildActive && !isExpanded))
-                      ? 'text-[#3B82F6] bg-blue-50/80' 
+                      ? 'text-blue-800 bg-blue-100 font-bold' 
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }
                   `}
@@ -63,9 +63,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeId, onSelect }) => {
                   <div className="flex items-center gap-3 z-10">
                     {/* Icon or Dot indicator */}
                     {sub.icon ? (
-                      <sub.icon size={18} className={`flex-shrink-0 transition-colors ${isActive ? 'text-[#3B82F6]' : 'text-slate-400 group-hover:text-slate-600'}`} />
+                      <sub.icon size={18} className={`flex-shrink-0 transition-colors ${(isActive || (isChildActive && !isExpanded)) ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'} ${isActive ? 'stroke-[2.5px]' : ''}`} />
                     ) : (
-                      <div className={`w-1.5 h-1.5 rounded-full transition-colors flex-shrink-0 ${isActive ? 'bg-[#3B82F6] ring-2 ring-blue-100' : 'bg-slate-300 group-hover:bg-slate-400'}`}></div>
+                      <div className={`w-1.5 h-1.5 rounded-full transition-colors flex-shrink-0 ${(isActive || (isChildActive && !isExpanded)) ? 'bg-blue-600 ring-2 ring-blue-200' : 'bg-slate-300 group-hover:bg-slate-400'}`}></div>
                     )}
                     <span className="truncate">{sub.label}</span>
                   </div>
@@ -77,7 +77,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeId, onSelect }) => {
                   
                   {/* Active Indicator Line */}
                   {(isActive) && (
-                     <div className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 bg-[#3B82F6] rounded-r-full"></div>
+                     <div className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 bg-blue-600 rounded-r-full"></div>
                   )}
                 </button>
                 
@@ -130,9 +130,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeId, onSelect }) => {
           
           return (
             <React.Fragment key={item.id}>
-              {/* Removed duplicate group labels per user request */}
-              
-              <div className="list-none"> {/* Changed from li to div to avoid invalid HTML nesting inside div container */}
+              <div className="list-none"> 
                 <button
                   onClick={() => {
                     if (isCollapsed) {
@@ -148,19 +146,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeId, onSelect }) => {
                   }}
                   className={`relative w-full flex items-center justify-between px-3 py-3 rounded-xl text-base font-bold transition-all duration-200 group mb-1
                     ${isActive 
-                      ? 'bg-gradient-to-r from-[#EFF6FF] to-[#F5F9FF] text-[#3B82F6] shadow-sm ring-1 ring-blue-100' 
+                      ? 'bg-blue-100 text-blue-800 shadow-sm' 
                       : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
                     }
                   `}
                   title={isCollapsed ? item.label : ''}
                 >
                   <div className={`flex items-center gap-3 ${isCollapsed ? 'justify-center w-full' : ''}`}>
-                    <item.icon size={22} strokeWidth={isActive ? 2 : 1.5} className={`${isActive ? 'text-[#3B82F6]' : 'text-slate-400 group-hover:text-slate-600'} transition-colors`} />
+                    <item.icon size={22} strokeWidth={isActive ? 2 : 1.5} className={`${isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'} transition-colors`} />
                     {!isCollapsed && <span className="tracking-tight">{item.label}</span>}
                   </div>
                   {!isCollapsed && hasSubmenu && (
                     <div className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
-                      <ChevronDown size={16} className={isActive ? 'text-[#3B82F6]' : 'text-slate-400'} />
+                      <ChevronDown size={16} className={isActive ? 'text-blue-600' : 'text-slate-400'} />
                     </div>
                   )}
                 </button>

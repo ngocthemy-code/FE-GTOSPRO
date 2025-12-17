@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { 
   Plus, 
@@ -6,13 +7,10 @@ import {
   Search, 
   Filter, 
   Download,
-  X,
   Check,
   ChevronUp,
   ChevronDown,
   XCircle,
-  MoreVertical,
-  RefreshCw,
   Edit2
 } from 'lucide-react';
 import { CategoryConfig, ColumnDefinition } from '../types';
@@ -144,7 +142,7 @@ export const CategoryManager: React.FC<CategoryManagerProps> = ({ config }) => {
         <div className="flex justify-center">
           <input 
             type="checkbox"
-            className="w-4 h-4 text-[#3B82F6] rounded border-gray-300 focus:ring-[#3B82F6] cursor-pointer"
+            className="w-4 h-4 text-[#3B82F6] rounded border-slate-300 focus:ring-[#3B82F6] cursor-pointer"
             onChange={(e) => handleNewRowChange(col.key, e.target.checked)}
             checked={!!newRow[col.key]}
           />
@@ -205,21 +203,19 @@ export const CategoryManager: React.FC<CategoryManagerProps> = ({ config }) => {
     </div>
   );
 
-  const isCustomerScreen = config.id === 'ops-cust';
-
   return (
     <div className="p-6 h-full flex flex-col bg-[#F5F7FA]">
       
-      {/* HEADER SECTION (Title + Main Actions) */}
+      {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
         <div>
-            <h2 className="text-2xl font-bold text-[#0F1B3D] tracking-tight">{config.title}</h2>
+            <h2 className="text-2xl font-bold text-[#0F172A] tracking-tight">{config.title}</h2>
             <p className="text-slate-500 text-sm mt-1">Quản lý danh mục và dữ liệu hệ thống</p>
         </div>
         <div className="flex items-center gap-3">
              <button 
                 onClick={handleDeleteSelected}
-                className="flex items-center gap-2 px-4 py-2 bg-white border border-[#E35253] text-[#E35253] rounded-lg hover:bg-red-50 shadow-sm transition-all text-sm font-semibold"
+                className="flex items-center gap-2 px-4 py-2 bg-white border border-red-200 text-red-600 rounded-lg hover:bg-red-50 shadow-sm transition-all text-sm font-semibold"
              >
                 <Trash2 size={16} />
                 <span>Xóa dòng</span>
@@ -235,7 +231,7 @@ export const CategoryManager: React.FC<CategoryManagerProps> = ({ config }) => {
 
              <button 
                 onClick={() => setIsAdding(true)}
-                className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-white rounded-lg shadow-md hover:shadow-lg hover:translate-y-[-1px] transition-all text-sm font-semibold"
+                className="flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition-all text-sm font-semibold"
              >
                 <Plus size={18} strokeWidth={2.5} />
                 <span>Thêm mới</span>
@@ -243,56 +239,10 @@ export const CategoryManager: React.FC<CategoryManagerProps> = ({ config }) => {
         </div>
       </div>
 
-      {/* SPECIAL FORM (Customer Screen Only) */}
-      {isCustomerScreen && (
-        <div className="mb-6 bg-white rounded-2xl p-6 shadow-[0_2px_6px_rgba(0,0,0,0.05)] border border-slate-100">
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="space-y-4">
-                    <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-bold text-[#0F1B3D] uppercase tracking-wider">Loại khách hàng</label>
-                        <select className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-[#3B82F6] outline-none transition-colors text-slate-700">
-                            <option>-- Chọn loại --</option>
-                            <option>Đại lý</option>
-                            <option>Chủ hàng</option>
-                        </select>
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-bold text-[#0F1B3D] uppercase tracking-wider">Mã Khách Hàng</label>
-                        <input className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-[#3B82F6] outline-none transition-colors" placeholder="Nhập mã..." />
-                    </div>
-                </div>
-                <div className="space-y-4">
-                    <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-bold text-[#0F1B3D] uppercase tracking-wider">Tên Khách Hàng</label>
-                        <input className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-[#3B82F6] outline-none transition-colors" placeholder="Nhập tên..." />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-bold text-[#0F1B3D] uppercase tracking-wider">Mã Số Thuế</label>
-                        <input className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-[#3B82F6] outline-none transition-colors" placeholder="Nhập MST..." />
-                    </div>
-                </div>
-                <div className="space-y-4">
-                    <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-bold text-[#0F1B3D] uppercase tracking-wider">Loại Thanh Toán</label>
-                        <select className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-[#3B82F6] outline-none transition-colors text-slate-700">
-                            <option>Thu Ngay</option>
-                            <option>Thu Sau</option>
-                        </select>
-                    </div>
-                    <div className="flex items-end h-full pb-1">
-                        <button className="w-full py-2.5 bg-white border border-[#3B82F6] text-[#3B82F6] rounded-lg font-semibold text-sm hover:bg-[#EFF6FF] transition-colors flex items-center justify-center gap-2">
-                            <Search size={16} /> Tìm kiếm nâng cao
-                        </button>
-                    </div>
-                </div>
-             </div>
-        </div>
-      )}
-
       {/* MAIN TABLE CARD */}
-      <div className="flex-1 bg-white rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.06)] border border-slate-100 flex flex-col overflow-hidden">
+      <div className="flex-1 bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
         
-        {/* Table Toolbar (Search & Selection Info) */}
+        {/* Table Toolbar */}
         <div className="px-5 py-3 border-b border-slate-100 flex items-center justify-between bg-white">
             <div className="relative w-72">
                 <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -328,9 +278,9 @@ export const CategoryManager: React.FC<CategoryManagerProps> = ({ config }) => {
         {/* The Table */}
         <div className="flex-1 overflow-auto">
             <table className="w-full text-left border-collapse">
-                <thead className="bg-[#F0F6FF] sticky top-0 z-10 shadow-sm">
+                <thead className="bg-[#F8FAFC] sticky top-0 z-10 shadow-sm border-b border-slate-200">
                     <tr>
-                        <th className="w-14 px-4 py-3 text-center border-b border-[#E2E8F0]">
+                        <th className="w-14 px-4 py-3 text-center border-b border-slate-200">
                             <div className="flex justify-center">
                                 <button 
                                     onClick={selectedIds.size === filteredData.length ? handleDeselectAll : handleSelectAll}
@@ -340,11 +290,11 @@ export const CategoryManager: React.FC<CategoryManagerProps> = ({ config }) => {
                                 </button>
                             </div>
                         </th>
-                        <th className="w-14 px-4 py-3 text-center border-b border-[#E2E8F0] text-sm font-bold text-[#0F1B3D] tracking-wide">STT</th>
+                        <th className="w-14 px-4 py-3 text-center border-b border-slate-200 text-xs font-bold text-slate-600 uppercase tracking-wide">STT</th>
                         {config.columns.map((col) => (
                             <th 
                                 key={col.key} 
-                                className={`px-4 py-3 border-b border-[#E2E8F0] text-sm font-bold text-[#0F1B3D] uppercase tracking-wide cursor-pointer hover:bg-[#E1EDFF] transition-colors group select-none ${getCellAlignment(col.type)}`}
+                                className={`px-4 py-3 border-b border-slate-200 text-xs font-bold text-slate-600 uppercase tracking-wide cursor-pointer hover:bg-slate-100 transition-colors group select-none ${getCellAlignment(col.type)}`}
                                 onClick={() => handleSort(col.key)}
                             >
                                 <div className={`flex items-center gap-1.5 ${getCellAlignment(col.type) === 'text-center' ? 'justify-center' : ''}`}>
@@ -358,7 +308,7 @@ export const CategoryManager: React.FC<CategoryManagerProps> = ({ config }) => {
                         ))}
                     </tr>
                 </thead>
-                <tbody className="divide-y divide-[#F1F5F9]">
+                <tbody className="divide-y divide-slate-100">
                     {/* Add Row Input */}
                     {isAdding && (
                         <tr className="bg-[#F0F7FF] animate-fade-in">
@@ -393,7 +343,6 @@ export const CategoryManager: React.FC<CategoryManagerProps> = ({ config }) => {
                                     ${isSelected ? 'bg-[#EAF3FF]' : 'bg-white hover:bg-[#F8FAFC]'}
                                 `}
                             >
-                                {/* Selection Indicator Border */}
                                 {isSelected && <td className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#3B82F6]"></td>}
 
                                 <td className="px-4 py-3 text-center" onClick={(e) => e.stopPropagation()}>
@@ -407,7 +356,6 @@ export const CategoryManager: React.FC<CategoryManagerProps> = ({ config }) => {
                                     <td key={col.key} className={`px-4 py-3 text-sm text-slate-700 ${getCellAlignment(col.type)}`}>
                                         <div className="flex items-center gap-2 relative">
                                             {renderCellContent(item, col)}
-                                            {/* Hover Edit Icon hint */}
                                             {col.type === 'text' && (
                                                 <Edit2 size={12} className="text-slate-300 opacity-0 group-hover:opacity-100 hover:text-[#3B82F6] cursor-pointer ml-auto transition-opacity" />
                                             )}
@@ -417,20 +365,6 @@ export const CategoryManager: React.FC<CategoryManagerProps> = ({ config }) => {
                             </tr>
                         );
                     })}
-
-                    {/* Empty State */}
-                    {sortedData.length === 0 && !isAdding && (
-                        <tr>
-                            <td colSpan={config.columns.length + 2} className="py-12 text-center">
-                                <div className="flex flex-col items-center justify-center text-slate-400">
-                                    <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-3">
-                                        <Search size={24} className="text-slate-300"/>
-                                    </div>
-                                    <p className="text-sm font-medium">Không tìm thấy dữ liệu phù hợp</p>
-                                </div>
-                            </td>
-                        </tr>
-                    )}
                 </tbody>
             </table>
         </div>
